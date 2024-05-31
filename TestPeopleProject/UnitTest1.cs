@@ -4,8 +4,6 @@ namespace TestPeopleProject
 {
     public class Tests
     {
-        Random random;
-        List<Person> persons;
         PersonStatistics statistics;
         
 
@@ -40,9 +38,10 @@ namespace TestPeopleProject
             Assert.Throws<NullVariableExceptioin>(() => new Person(2, null, 14, true, -2));
         }
         [Test]
-        public void NullVariable()
+        public void InvalidPersonList()
         {
-            Assert.Throws<NullVariableExceptioin>(() => new Person(2, null, 14, true, -2));
+            List<Person> list = new List<Person>();
+            Assert.Throws<InvalidListException>(() => statistics.getPersonWithHighestScore(list));
         }
         /*
         [Test]

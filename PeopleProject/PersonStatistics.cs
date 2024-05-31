@@ -26,12 +26,20 @@ namespace PeopleProject
         }
         public int getNumbrOfStudent(List<Person> persons)
         {
-            if(persons.Count == 0) throw new 
-            return persons.Where(e => e.IsStudent == true).Count();
+            if (persons.Count == 0) throw new InvalidListException();
+            else return persons.Where(e => e.IsStudent == true).Count();
         }
         public Person getPersonWithHighestScore(List<Person> persons)
         {
-            return persons.Where(e => e.Score == persons.Max(w => w.Score)).First();
+            if (persons == null) throw new ArgumentNullException("szup");
+            if (persons.Count == 0) throw new InvalidListException();
+            else
+            {
+                int maxScore = persons.Max(p => p.Score);
+                List<Person> max = persons.Where(e => e.Score == maxScore).ToList();
+                if (max.Count > 1) throw new ExceededNumberException();
+                else return max.First();
+            }
         }
         public double getAvarageScoreOfStudents(List<Person> persons)
         {
@@ -41,11 +49,13 @@ namespace PeopleProject
         }
         public Person getOldestStudent(List<Person> persons)
         {
-            return persons.Where(e => e.Age == persons.Max(w => w.Age)).First();
+            if (persons.Count == 0) throw new InvalidListException();
+            else return persons.Where(e => e.Age == persons.Max(w => w.Age)).First();
         }
         public bool isAnyoneFailing(List<Person> persons)
         {
-            return persons.Any(e => e.Score < 40);
+            if (persons.Count == 0) throw new InvalidListException();
+            else return persons.Any(e => e.Score < 40);
         }
     }
     public class StatisticsConstructorException : Exception 
@@ -68,10 +78,15 @@ namespace PeopleProject
         public NullVariableExceptioin()
         : base("Nem lehet a class változója null") { }
     }
-    public class NullVariableExceptioin : Exception
+    public class InvalidListException : Exception
     {
-        public NullVariableExceptioin()
-        : base("Nem lehet a class változója null") { }
+        public InvalidListException()
+        : base("A list nem tartalmaz elemeket") { }
+    }
+    public class ExceededNumberException : Exception
+    {
+        public ExceededNumberException()
+        : base("Több adat megfelel a lekért értéknek") { }
     }
 }
 
