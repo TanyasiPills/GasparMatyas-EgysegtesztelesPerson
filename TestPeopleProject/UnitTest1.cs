@@ -38,26 +38,25 @@ namespace TestPeopleProject
             Assert.Throws<NullVariableExceptioin>(() => new Person(2, null, 14, true, -2));
         }
         [Test]
-        public void InvalidPersonList()
+        public void FuncrionWithoutPerson()
         {
-            List<Person> list = new List<Person>();
-            Assert.Throws<InvalidListException>(() => statistics.getPersonWithHighestScore(list));
-        }
-        /*
-        [Test]
-        public void EmptyPersonList()
-        {
-            Assert.Throws<>(() => );
+            List<Person> persons = new List<Person>();
+            Assert.Throws<InvalidListException>(() => statistics.getNumbrOfStudent(persons));
         }
         [Test]
-        public void EmptyPersonList()
+        public void ExceedNumber()
         {
-            Assert.Throws<>(() => );
+            List<Person> ps = new List<Person>();
+            ps.Add(new Person(1, "János", 23, true, 78));
+            ps.Add(new Person(2, "Ferenc", 20, true, 78));
+            Assert.Throws<ExceededNumberException>(() => statistics.getPersonWithHighestScore(ps));
         }
         [Test]
-        public void EmptyPersonList()
+        public void NegativeAgeStudent()
         {
-            Assert.Throws<>(() => );
-        }*/
+            List<Person> ps = new List<Person>();
+            ps.Add(new Person(1, "János", -1, true, 78));
+            Assert.Throws<NegativeAgeException>(() => statistics.getOldestStudent(ps));
+        }
     }
 }

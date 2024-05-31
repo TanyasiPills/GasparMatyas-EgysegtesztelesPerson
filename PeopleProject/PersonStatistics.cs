@@ -49,8 +49,10 @@ namespace PeopleProject
         }
         public Person getOldestStudent(List<Person> persons)
         {
+            Person age = persons.Where(e => e.Age == persons.Max(w => w.Age)).First();
             if (persons.Count == 0) throw new InvalidListException();
-            else return persons.Where(e => e.Age == persons.Max(w => w.Age)).First();
+            if (age.Age < 0) throw new NegativeAgeException();
+            else return age;
         }
         public bool isAnyoneFailing(List<Person> persons)
         {
@@ -87,6 +89,11 @@ namespace PeopleProject
     {
         public ExceededNumberException()
         : base("Több adat megfelel a lekért értéknek") { }
+    }
+    public class NegativeAgeException : Exception
+    {
+        public NegativeAgeException()
+        : base("Nem lehet a kor negatív") { }
     }
 }
 
